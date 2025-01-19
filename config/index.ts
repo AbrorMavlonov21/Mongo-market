@@ -8,4 +8,5 @@ export const config: IConfig = {
   JWT_ACCESS_SECRET: process.env.JWT_ACCESS_SECRET || '',
   JWT_REFRESH_SECRET: process.env.JWT_REFRESH_SECRET || '',
   DB_URL: process.env.DB_URL || '',
+  TGBOT_TOKEN: process.env.TGBOT_TOKEN || '',
 };

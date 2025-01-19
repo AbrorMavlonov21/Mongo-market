@@ -6,6 +6,9 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { config } from '../config/index';
 import { APP_FILTER } from '@nestjs/core';
 import { CatchEverythingFilter } from 'lib/exceptionFilter';
+import { UserModule } from './modules/user/user.module';
+import { CartModule } from './modules/cart/cart.module';
+import { TgBotModule } from './modules/tg_bot/tg_bot.module';
 
 @Module({
   imports: [
@@ -13,6 +16,9 @@ import { CatchEverythingFilter } from 'lib/exceptionFilter';
     ProductModule,
     CategoryModule,
     PlaceModule,
+    UserModule,
+    CartModule,
+    TgBotModule,
   ],
   controllers: [],
   providers: [

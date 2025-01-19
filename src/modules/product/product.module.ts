@@ -8,6 +8,8 @@ import {
   CategoryEntity,
   CategorySchema,
 } from '../category/entities/category.entity';
+import { CategoryService } from '../category/category.service';
+import { CategoryRepository } from '../category/category.repository';
 
 @Module({
   imports: [
@@ -20,6 +22,8 @@ import {
   providers: [
     { provide: 'IProductService', useClass: ProductService },
     { provide: 'IProductRepository', useClass: ProductRepository },
+    { provide: 'ICategoryService', useClass: CategoryService },
+    { provide: 'ICategoryRepository', useClass: CategoryRepository },
   ],
 })
 export class ProductModule {}

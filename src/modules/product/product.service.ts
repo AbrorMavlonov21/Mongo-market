@@ -12,8 +12,7 @@ export class ProductService implements IProductService {
     private readonly productRepository: IProductRepository,
   ) {}
   async create(dto: CreateProductDto): Promise<ProductDocument> {
-    const data = await this.productRepository.create(dto);
-    return data;
+    return await this.productRepository.create(dto);
   }
   async getAll(): Promise<Array<ProductDocument>> {
     return await this.productRepository.getAll();

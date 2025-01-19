@@ -16,7 +16,7 @@ export class ProductEntity implements IProduct {
   @Prop({ required: true })
   name: string;
 
-  @Prop({ required: true })
+  @Prop({ required: false })
   description: string;
 
   @Prop({ required: true })

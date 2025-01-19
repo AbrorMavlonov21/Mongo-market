@@ -16,18 +16,25 @@ import { IProductService } from './interfaces/iproduct.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { ProductDocument } from './entities/product.entity';
 import { UpdateProductDto } from './dto/update-product.dto';
+import { ICategoryService } from '../category/interfaces/icategory.service';
 
 @Controller('product')
 export class ProductController {
   constructor(
     @Inject('IProductService')
     private readonly productService: IProductService,
+    @Inject('ICategoryService')
+    private readonly categoryService: ICategoryService,
   ) {}
   @Post('create')
   async create(
     @Body() dto: CreateProductDto,
   ): Promise<ResData<ProductDocument>> {
     try {
+      const data = await this.categoryService.getById(dto.categoryId);
+      if (!data) {
+        throw new HttpException('Category Not Found', HttpStatus.NOT_FOUND);
+      }
       const resData = await this.productService.create(dto);
       return new ResData<ProductDocument>(
         HttpStatus.CREATED,

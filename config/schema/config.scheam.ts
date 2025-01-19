@@ -17,4 +17,8 @@ export class EnvironmentVariables {
   @IsString()
   @IsNotEmpty()
   JWT_REFRESH_SECRET: string;
+
+  @IsString()
+  @IsNotEmpty()
+  TGBOT_TOKEN: string;
 }

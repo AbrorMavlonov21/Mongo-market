@@ -1,11 +1,12 @@
+import { BaseRepository } from 'common/base.repostory';
 import { CreateCategoryDto } from '../dto/create-category.dto';
 import { UpdateCategoryDto } from '../dto/update-category.dto';
-import { CategoryDocument } from '../entities/category.entity';
+import { CategoryEntity } from '../entities/category.entity';
 
-export interface ICategoryRepository {
-  create(dto: CreateCategoryDto): Promise<CategoryDocument>;
-  getAll(): Promise<Array<CategoryDocument>>;
-  update(id: string, dto: UpdateCategoryDto): Promise<CategoryDocument>;
-  delete(id: string): Promise<CategoryDocument>;
-  getById(id: string): Promise<CategoryDocument>;
-}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface ICategoryRepository
+  extends BaseRepository<
+    CategoryEntity,
+    CreateCategoryDto,
+    UpdateCategoryDto
+  > {}

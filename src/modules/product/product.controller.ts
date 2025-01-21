@@ -10,11 +10,9 @@ import {
   HttpException,
   HttpStatus,
 } from '@nestjs/common';
-import { ResData } from 'lib/resData';
 import mongoose from 'mongoose';
 import { IProductService } from './interfaces/iproduct.service';
 import { CreateProductDto } from './dto/create-product.dto';
-import { ProductDocument } from './entities/product.entity';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { ICategoryService } from '../category/interfaces/icategory.service';
 
@@ -27,20 +25,11 @@ export class ProductController {
     private readonly categoryService: ICategoryService,
   ) {}
   @Post('create')
-  async create(
-    @Body() dto: CreateProductDto,
-  ): Promise<ResData<ProductDocument>> {
+  async create(@Body() dto: CreateProductDto) {
     try {
-      const data = await this.categoryService.getById(dto.categoryId);
-      if (!data) {
-        throw new HttpException('Category Not Found', HttpStatus.NOT_FOUND);
-      }
+      await this.categoryService.findOne(dto.categoryId);
       const resData = await this.productService.create(dto);
-      return new ResData<ProductDocument>(
-        HttpStatus.CREATED,
-        'Created Successfully',
-        resData,
-      );
+      return resData;
     } catch (error) {
       if (error instanceof HttpException) {
         throw error;
@@ -55,12 +44,8 @@ export class ProductController {
   @Get('get-all')
   async findAll() {
     try {
-      const resData = await this.productService.getAll();
-      return new ResData<Array<ProductDocument>>(
-        HttpStatus.OK,
-        'Success',
-        resData,
-      );
+      const resData = await this.productService.findAll();
+      return resData;
     } catch (error) {
       if (error instanceof HttpException) {
         throw error;
@@ -79,8 +64,8 @@ export class ProductController {
       if (!isValidId) {
         throw new HttpException('Invalid Id', HttpStatus.BAD_REQUEST);
       }
-      const resData = await this.productService.getById(id);
-      return new ResData<ProductDocument>(HttpStatus.OK, 'Success', resData);
+      const resData = await this.productService.findOne(id);
+      return resData;
     } catch (error) {
       if (error instanceof HttpException) {
         throw error;
@@ -99,12 +84,9 @@ export class ProductController {
       if (!isValidId) {
         throw new HttpException('Invalid Id', HttpStatus.BAD_REQUEST);
       }
+      await this.categoryService.findOne(dto.categoryId);
       const resData = await this.productService.update(id, dto);
-      return new ResData<ProductDocument>(
-        HttpStatus.OK,
-        'Updated Successfully',
-        resData,
-      );
+      return resData;
     } catch (error) {
       if (error instanceof HttpException) {
         throw error;
@@ -123,12 +105,8 @@ export class ProductController {
       if (!isValidId) {
         throw new HttpException('Invalid Id', HttpStatus.BAD_REQUEST);
       }
-      const resData = await this.productService.delete(id);
-      return new ResData<ProductDocument>(
-        HttpStatus.OK,
-        'deleted Successfully',
-        resData,
-      );
+      const resData = await this.productService.remove(id);
+      return resData;
     } catch (error) {
       if (error instanceof HttpException) {
         throw error;

@@ -9,6 +9,9 @@ import { CatchEverythingFilter } from 'lib/exceptionFilter';
 import { UserModule } from './modules/user/user.module';
 import { CartModule } from './modules/cart/cart.module';
 import { TgBotModule } from './modules/tg_bot/tg_bot.module';
+import { UserCModule } from './modules/user-c/user-c.module';
+import { AuthModule } from './modules/auth/auth.module';
+import { SharedModule } from 'shared/shared.module';
 
 @Module({
   imports: [
@@ -19,6 +22,9 @@ import { TgBotModule } from './modules/tg_bot/tg_bot.module';
     UserModule,
     CartModule,
     TgBotModule,
+    UserCModule,
+    AuthModule,
+    SharedModule,
   ],
   controllers: [],
   providers: [

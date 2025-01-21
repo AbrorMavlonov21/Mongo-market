@@ -1,9 +1,10 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { BaseEntity } from 'common/base.entity';
 import mongoose, { HydratedDocument } from 'mongoose';
 
 export type ProductDocument = HydratedDocument<ProductEntity>;
 
-export interface IProduct {
+export interface IProduct extends BaseEntity {
   name: string;
   description: string;
   price: number;
@@ -12,7 +13,7 @@ export interface IProduct {
 }
 
 @Schema({ collection: 'Products' })
-export class ProductEntity implements IProduct {
+export class ProductEntity extends BaseEntity implements IProduct {
   @Prop({ required: true })
   name: string;
 

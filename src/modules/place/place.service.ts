@@ -1,26 +1,20 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
+import { BaseService } from 'common/base.service';
+import { PlaceEntity } from './entities/place.entity';
 import { CreatePlaceDto } from './dto/create-place.dto';
 import { UpdatePlaceDto } from './dto/update-place.dto';
+import { IPlaceService } from './interfaces/iplace.service';
+import { IPlaceRepository } from './interfaces/iplace.repository';
 
 @Injectable()
-export class PlaceService {
-  create(createPlaceDto: CreatePlaceDto) {
-    return 'This action adds a new place';
-  }
-
-  findAll() {
-    return `This action returns all place`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} place`;
-  }
-
-  update(id: number, updatePlaceDto: UpdatePlaceDto) {
-    return `This action updates a #${id} place`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} place`;
+export class PlaceService
+  extends BaseService<PlaceEntity, CreatePlaceDto, UpdatePlaceDto>
+  implements IPlaceService
+{
+  constructor(
+    @Inject('IPlaceRepository')
+    private readonly placeRepository: IPlaceRepository,
+  ) {
+    super(placeRepository, 'Place');
   }
 }

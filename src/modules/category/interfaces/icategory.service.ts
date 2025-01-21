@@ -1,11 +1,8 @@
+import { BaseService } from 'common/base.service';
 import { CreateCategoryDto } from '../dto/create-category.dto';
 import { UpdateCategoryDto } from '../dto/update-category.dto';
-import { CategoryDocument } from '../entities/category.entity';
+import { CategoryEntity } from '../entities/category.entity';
 
-export interface ICategoryService {
-  create(dto: CreateCategoryDto): Promise<CategoryDocument>;
-  getAll(): Promise<Array<CategoryDocument>>;
-  update(id: string, dto: UpdateCategoryDto): Promise<CategoryDocument>;
-  delete(id: string): Promise<CategoryDocument>;
-  getById(id: string): Promise<CategoryDocument | undefined>;
-}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface ICategoryService
+  extends BaseService<CategoryEntity, CreateCategoryDto, UpdateCategoryDto> {}

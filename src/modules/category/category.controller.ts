@@ -12,8 +12,6 @@ import {
 } from '@nestjs/common';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
-import { ResData } from 'lib/resData';
-import { CategoryDocument } from './entities/category.entity';
 import mongoose from 'mongoose';
 import { ICategoryService } from './interfaces/icategory.service';
 
@@ -24,16 +22,10 @@ export class CategoryController {
     private readonly categoryService: ICategoryService,
   ) {}
   @Post('create')
-  async create(
-    @Body() dto: CreateCategoryDto,
-  ): Promise<ResData<CategoryDocument>> {
+  async create(@Body() dto: CreateCategoryDto) {
     try {
       const resData = await this.categoryService.create(dto);
-      return new ResData<CategoryDocument>(
-        HttpStatus.CREATED,
-        'Created Successfully',
-        resData,
-      );
+      return resData;
     } catch (error) {
       if (error instanceof HttpException) {
         throw error;
@@ -48,12 +40,8 @@ export class CategoryController {
   @Get('get-all')
   async findAll() {
     try {
-      const resData = await this.categoryService.getAll();
-      return new ResData<Array<CategoryDocument>>(
-        HttpStatus.OK,
-        'Success',
-        resData,
-      );
+      const resData = await this.categoryService.findAll();
+      return resData;
     } catch (error) {
       if (error instanceof HttpException) {
         throw error;
@@ -72,8 +60,8 @@ export class CategoryController {
       if (!isValidId) {
         throw new HttpException('Invalid Id', HttpStatus.BAD_REQUEST);
       }
-      const resData = await this.categoryService.getById(id);
-      return new ResData<CategoryDocument>(HttpStatus.OK, 'Success', resData);
+      const resData = await this.categoryService.findOne(id);
+      return resData;
     } catch (error) {
       if (error instanceof HttpException) {
         throw error;
@@ -93,11 +81,7 @@ export class CategoryController {
         throw new HttpException('Invalid Id', HttpStatus.BAD_REQUEST);
       }
       const resData = await this.categoryService.update(id, dto);
-      return new ResData<CategoryDocument>(
-        HttpStatus.OK,
-        'Updated Successfully',
-        resData,
-      );
+      return resData;
     } catch (error) {
       if (error instanceof HttpException) {
         throw error;
@@ -116,12 +100,8 @@ export class CategoryController {
       if (!isValidId) {
         throw new HttpException('Invalid Id', HttpStatus.BAD_REQUEST);
       }
-      const resData = await this.categoryService.delete(id);
-      return new ResData<CategoryDocument>(
-        HttpStatus.OK,
-        'deleted Successfully',
-        resData,
-      );
+      const resData = await this.categoryService.remove(id);
+      return resData;
     } catch (error) {
       if (error instanceof HttpException) {
         throw error;

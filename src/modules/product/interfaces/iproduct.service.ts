@@ -1,11 +1,8 @@
+import { BaseService } from 'common/base.service';
 import { CreateProductDto } from '../dto/create-product.dto';
 import { UpdateProductDto } from '../dto/update-product.dto';
-import { ProductDocument } from '../entities/product.entity';
+import { ProductEntity } from '../entities/product.entity';
 
-export interface IProductService {
-  create(dto: CreateProductDto): Promise<ProductDocument>;
-  getAll(): Promise<Array<ProductDocument>>;
-  update(id: string, dto: UpdateProductDto): Promise<ProductDocument>;
-  delete(id: string): Promise<ProductDocument>;
-  getById(id: string): Promise<ProductDocument | undefined>;
-}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface IProductService
+  extends BaseService<ProductEntity, CreateProductDto, UpdateProductDto> {}

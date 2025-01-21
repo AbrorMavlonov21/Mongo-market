@@ -7,6 +7,7 @@ import { ProductEntity } from '../product/entities/product.entity';
 import { CartEntity } from '../cart/entities/cart.entity';
 import { Model } from 'mongoose';
 import { config } from '../../../config/index';
+import { InputMediaPhoto, InputMediaVideo } from 'grammy/types';
 
 @Injectable()
 export class TgBotService {
@@ -141,6 +142,10 @@ export class TgBotService {
     this.telegramBot.on('message:text', async (ctx) => {
       const userName = ctx.from.first_name;
       const chatId = ctx.chat.id;
+      if (ctx.message.text.startsWith('/')) {
+        console.log(`Command received: ${ctx.message.text}`);
+        return;
+      }
 
       try {
         const existingUser = await this.userModel.findOne({ chatId });

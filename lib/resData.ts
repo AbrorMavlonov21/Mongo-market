@@ -1,16 +1,13 @@
-export interface IMeta {
-  statusCode: number;
-  message: string;
-  [key: string]: string | number | object;
-}
+import { MetaType } from 'common/type.meta';
+
 export class ResData<TData> {
-  meta: IMeta;
+  meta: Record<string, MetaType>;
 
   constructor(
     statusCode: number,
     message: string,
     public data: TData | null = null,
-    meta: Record<string, string | number | object> = {},
+    meta: Partial<Record<string, MetaType>> = {},
   ) {
     this.meta = {
       statusCode,
